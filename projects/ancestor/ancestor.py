@@ -4,7 +4,7 @@ from graph import Graph
 from util import Stack, Queue
 
 
-def ancestor(arr, k):
+def earliest_ancestor(arr, k):
     assert len(arr[0]) == 2, 'input array must have 2 columns'
     g = Graph()  # child to parent
     for row in arr:
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     ]
 
-    print(ancestor(vs, 6)) # 10
-    print(ancestor(vs, 8)) # 4
-    print(ancestor(vs, 11)) # -1
+    print(earliest_ancestor(vs, 6)) # 10
+    print(earliest_ancestor(vs, 8)) # 4
+    print(earliest_ancestor(vs, 11)) # -1
 
