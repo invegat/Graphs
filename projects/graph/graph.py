@@ -48,7 +48,7 @@ class Graph:
         beginning from starting_vertex.
         """
         if cb is None:
-            def cb(x): return print(x, end=' ')
+            cb = lambda x: print(x, end = ' ')
         visited = set()
         q = Queue()
         q.enqueue(starting_vertex)
@@ -61,11 +61,13 @@ class Graph:
                     q.enqueue(neighbor)
         print('bft')
 
-    def dft(self, starting_vertex):
+    def dft(self, starting_vertex, cb = None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
+        if cb is None:
+            cb = lambda x: print(x, end=' ')
         visited = set()
         s = Stack()
         s.push(starting_vertex)
@@ -73,33 +75,37 @@ class Graph:
             v = s.pop()
             if v not in visited:
                 visited.add(v)
-                print(v, end=' ')
+                cb(v)
                 for neighbor in self.vertices[v]:
                     s.push(neighbor)
         print('dft')
 
-    def dft_recursive(self, starting_vertex, visited=None):
+    def dft_recursive(self, starting_vertex, visited=None, cb = None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         This should be done using recursion.
         """
+        if cb is None:
+            cb = lambda x: print(x, end=' ')
         first = (visited is None)
         if visited is None:
             visited = set()
         if starting_vertex not in visited:
-            print(starting_vertex, end=' ')
+            cb(starting_vertex)
             visited.add(starting_vertex)
             for neigbor in self.vertices[starting_vertex]:
-                self.dft_recursive(neigbor, visited)
+                if neigbor not in visited:
+                    self.dft_recursive(neigbor, visited, cb)
         if first:
             print('dft_recursive')
 
-    def bft_recursive(self, starting_vertex):
+    def bft_recursive(self, starting_vertex, cb = None):
         visited = {starting_vertex}
         q = Queue()
         q.enqueue(starting_vertex)
-        def cb(x): return print(x, end=' ')
+        if cb is None:
+            cb = lambda x: print(x, end=' ')
         cb(starting_vertex)
         self.bfs_iterate(q, cb, visited)
         print('bft_recursive')
@@ -150,8 +156,8 @@ class Graph:
 
 
 if __name__ == '__main__':
-    graph = Graph()  # Instantiate your graph
-    # https://github.com/LambdaSchool/Graphs/blob/master/objectives/breadth-first-search/img/bfs-visit-order.png
+
+    graph = Graph()
     graph.add_vertex(1)
     graph.add_vertex(2)
     graph.add_vertex(3)
@@ -168,7 +174,7 @@ if __name__ == '__main__':
     graph.add_edge(2, 4)
     graph.add_edge(3, 5)
     graph.add_edge(2, 3)
-    graph.add_edge(4, 6)
+    graph.add_edge(4, 6)     
 
     '''
     Should print:
@@ -211,7 +217,6 @@ if __name__ == '__main__':
     '''
     graph.dft_recursive(1)
 
-
     """
     Valid BFT recursive paths:   
 
@@ -230,7 +235,7 @@ if __name__ == '__main__':
 
     """
 
-    graph.bft_recursive(1)    
+    graph.bft_recursive(1)
 
     '''
     Valid BFS path:
@@ -252,4 +257,4 @@ if __name__ == '__main__':
     try:
         print(graph.dfs(6, 7), 'bad DFS Path')
     except Exception as e:
-        print('Exception ',e)    
+        print('Exception ',e)
