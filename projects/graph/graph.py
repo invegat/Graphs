@@ -10,11 +10,12 @@ class Graph:
     def __init__(self):
         self.vertices = {}
 
-    def add_vertex(self, vertex):
+    def add_vertex(self, vertex, unique = False):
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex] = set()
+        if (not unique) or (vertex not in self.vertices):
+            self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -41,6 +42,16 @@ class Graph:
 
         if child_q.size() > 0:
             self.bfs_iterate(child_q, cb, visited)
+
+    def bft_recursive(self, starting_vertex, cb = None):
+        visited = {starting_vertex}
+        q = Queue()
+        q.enqueue(starting_vertex)
+        if cb is None:
+            cb = lambda x: print(x, end=' ')
+        cb(starting_vertex)
+        self.bfs_iterate(q, cb, visited)
+        print('bft_recursive')            
 
     def bft(self, starting_vertex, cb=None):
         """
@@ -100,15 +111,7 @@ class Graph:
         if first:
             print('dft_recursive')
 
-    def bft_recursive(self, starting_vertex, cb = None):
-        visited = {starting_vertex}
-        q = Queue()
-        q.enqueue(starting_vertex)
-        if cb is None:
-            cb = lambda x: print(x, end=' ')
-        cb(starting_vertex)
-        self.bfs_iterate(q, cb, visited)
-        print('bft_recursive')
+
 
     def bfs(self, starting_vertex, destination_vertex):
         """
