@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../graph')
-from util import Stack, Queue
 from graph import Graph
+from util import Stack, Queue
 
 
 def ancestor(arr, k):
@@ -15,6 +15,7 @@ def ancestor(arr, k):
     can = []
     q = Queue()
     q.enqueue(k)
+    max = 0
 
     while q.size() > 0:
         child_q = Queue()
@@ -22,23 +23,28 @@ def ancestor(arr, k):
         for neighbor in g.vertices[v]:
             child_q.enqueue(neighbor)
             q.enqueue(neighbor)
-        if child_q.size() == 0:
-            can.append(v)
+        if child_q.size() == 0 and v != k:
+            l = len(g.bfs(k, v))
+            can.append([l,v])
 
-    can.sort()
-    return can[-1]
+    can.sort(key = lambda r: g.max_vertex * r[0] - r[1])
+    return can[-1][1] if len(can) > 0 else -1
 
 
-print(ancestor(
-    [
-        [1, 3],
-        [2, 3],
-        [3, 6],
-        [5, 6],
-        [5, 7],
-        [4, 5],
-        [4, 8],
-        [11, 8],
-        [10, 1]
-    ], 6
-))
+vs = [
+     [1, 3],
+    [2, 3],
+    [3, 6],
+    [5, 6],
+    [5, 7],
+    [4, 5],
+    [4, 8],
+    [11, 8],
+    [10, 1]
+
+]
+
+print(ancestor(vs, 6)) # 10
+print(ancestor(vs, 8)) # 4
+print(ancestor(vs, 11)) # -1
+

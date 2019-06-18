@@ -9,12 +9,20 @@ class Graph:
 
     def __init__(self):
         self.vertices = {}
+        self.max = 0
+
+    @property
+    def max_vertex(self):
+        return self.max
+
 
     def add_vertex(self, vertex, unique = False):
         """
         Add a vertex to the graph.
         """
         if (not unique) or (vertex not in self.vertices):
+            if vertex > self.max:
+                self.max = vertex
             self.vertices[vertex] = set()
 
     def add_edge(self, v1, v2):
