@@ -32,8 +32,7 @@ class Graph:
         if v1 in self.vertices and v2 in self.vertices:
             self.vertices[v1].add(v2)
         else:
-            raise IndexError(
-                f'at least one of ({v1},{v2}) vertexes does not exist')
+            raise IndexError(f'at least one of ({v1},{v2}) vertexes does not exist')
 
     def bfs_iterate(self, q, cb, visited):
 

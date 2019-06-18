@@ -15,7 +15,6 @@ def earliest_ancestor(arr, k):
     can = []
     q = Queue()
     q.enqueue(k)
-    max = 0
 
     while q.size() > 0:
         child_q = Queue()
