@@ -30,21 +30,22 @@ def ancestor(arr, k):
     can.sort(key = lambda r: g.max_vertex * r[0] - r[1])
     return can[-1][1] if len(can) > 0 else -1
 
+if __name__ == '__main__':
 
-vs = [
-     [1, 3],
-    [2, 3],
-    [3, 6],
-    [5, 6],
-    [5, 7],
-    [4, 5],
-    [4, 8],
-    [11, 8],
-    [10, 1]
+    vs = [
+        [1, 3],
+        [2, 3],
+        [3, 6],
+        [5, 6],
+        [5, 7],
+        [4, 5],
+        [4, 8],
+        [11, 8],
+        [10, 1]
 
-]
+    ]
 
-print(ancestor(vs, 6)) # 10
-print(ancestor(vs, 8)) # 4
-print(ancestor(vs, 11)) # -1
+    print(ancestor(vs, 6)) # 10
+    print(ancestor(vs, 8)) # 4
+    print(ancestor(vs, 11)) # -1
 
