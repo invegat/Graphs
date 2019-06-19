@@ -59,15 +59,17 @@ class SocialGraph:
         total = numUsers
         # Create friendships
         for key in self.users.keys():
+            if total == 0:
+                break
             t = random.randint(1,min(total + 1,5))
             r = random.sample(range(0, numUsers),t)
             for i in r:
-                if key < i and i not in self.friendships[key] and self.num_friends(key) < 4:
+                if key < i and i not in self.friendships[key] and self.num_friends(key) < 4 and total > 0:
                     self.addFriendship(key, i)
                     total -= 1
 
         while total > 0:
-            print('total', total)
+            # print('total', total)
             dumper = random.randint(1, numUsers)
             loop = 0
             while self.num_friends(dumper) < 4 and total > 0 and loop < 10:
@@ -89,7 +91,22 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
-
+        # loop = 0
+        q = Queue()
+        q.enqueue(userID)
+        visited[userID] = [userID]
+        while q.size() > 0:
+            # print('q.size', q.size())
+            v = q.dequeue()
+            # print('v',v)
+            for friend in self.friendships[v]:
+                if friend != v and friend != userID and friend not in visited:
+                    # print('friend', friend, 'visited[userID]', visited[userID])
+                    visited[friend] = [*visited[v], friend]
+                    q.enqueue(friend)
+            # loop += 1
+            # if loop >= 10:
+            #     break
         return visited
 
 
